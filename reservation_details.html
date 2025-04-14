@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزئیات رزرو</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .reservation-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 500;
+        }
+
+        #selected-item-info {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #selected-item-name {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        #selected-item-price {
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: calc(100% - 22px);
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"].flatpickr:focus,
+        .form-group input[type="number"]:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .form-group input[type="number"]::-webkit-inner-spin-button,
+        .form-group input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .cafe-menu {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .cafe-menu h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .cafe-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .cafe-item label {
+            font-weight: 400;
+            color: #666;
+        }
+
+        .cafe-item input[type="checkbox"] {
+            margin-left: 15px;
+            width: 18px;
+            height: 18px;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1e7e34;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .modal-button.confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .modal-button.cancel {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .nav-button {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .nav-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="reservation-container">
+        <h2>جزئیات رزرو</h2>
+        <div id="selected-item-info">
+            <h3 id="selected-item-name"></h3>
+            <p id="selected-item-price"></p>
+        </div>
+        <form id="reservationForm" action="#" method="post">
+            <div class="form-group">
+                <label for="reservationTime">زمان رزرو:</label>
+                <input type="text" id="reservationTime" name="reservationTime" class="flatpickr" required>
+            </div>
+            <div class="form-group">
+                <label for="checkoutTime">زمان پایان:</label>
+                <input type="text" id="checkoutTime" name="checkoutTime" class="flatpickr" required>
+            </div>
+            <div class="form-group">
+                <label for="personCount">تعداد افراد (1 تا 4):</label>
+                <input type="number" id="personCount" name="personCount" min="1" max="4" required>
+            </div>
+
+            <div class="cafe-menu">
+                <h3>پیش‌سفارش از کافه</h3>
+                <div class="cafe-item">
+                    <label for="coffee">قهوه</label>
+                    <input type="checkbox" id="coffee" name="cafeItems" value="قهوه">
+                </div>
+                <div class="cafe-item">
+                    <label for="sandwich">ساندویچ</label>
+                    <input type="checkbox" id="sandwich" name="cafeItems" value="ساندویچ">
+                </div>
+                <div class="cafe-item">
+                    <label for="tea">چای</label>
+                    <input type="checkbox" id="tea" name="cafeItems" value="چای">
+                </div>
+                <div class="cafe-item">
+                    <label for="cake">کیک</label>
+                    <input type="checkbox" id="cake" name="cafeItems" value="کیک">
+                </div>
+            </div>
+
+            <button type="submit">تایید نهایی</button>
+            
+            <div class="nav-buttons">
+                <a href="select_item.html" class="nav-button">بازگشت به انتخاب آیتم</a>
+                <a href="index.html" class="nav-button">بازگشت به صفحه اصلی</a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- مودال تأیید رزرو -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h3>تأیید رزرو</h3>
+            <p>آیا از اطلاعات وارد شده اطمینان دارید؟</p>
+            <p>پس از تأیید، پیامکی حاوی جزئیات رزرو برای شما ارسال خواهد شد.</p>
+            <div class="modal-buttons">
+                <button id="confirmReservation" class="modal-button confirm">تأیید و ارسال پیامک</button>
+                <button id="cancelReservation" class="modal-button cancel">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // بررسی وضعیت ورود کاربر
+        const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+        const userMobile = localStorage.getItem('userMobile');
+        
+        if (!isLoggedIn) {
+            alert('لطفاً ابتدا وارد حساب کاربری خود شوید.');
+            window.location.href = 'login.html';
+        }
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedItem = urlParams.get('item');
+        const itemPrice = urlParams.get('price');
+
+        console.log('آیتم انتخاب شده:', selectedItem);
+        console.log('قیمت آیتم:', itemPrice);
+
+        const itemNameDisplay = document.getElementById('selected-item-name');
+        const itemPriceDisplay = document.getElementById('selected-item-price');
+
+        let itemNameText = '';
+
+        if (selectedItem && selectedItem.startsWith('ps5')) {
+            const itemNumber = selectedItem.split('-')[1];
+            itemNameText = `PlayStation 5 - شماره ${itemNumber}`;
+        } else if (selectedItem && selectedItem.startsWith('billiard')) {
+            const itemNumber = selectedItem.split('-')[1];
+            itemNameText = `میز بیلیارد - شماره ${itemNumber}`;
+        }
+
+        if (itemNameDisplay) {
+            itemNameDisplay.textContent = itemNameText;
+        }
+
+        if (itemPriceDisplay) {
+            itemPriceDisplay.textContent = 'قیمت اجاره ساعتی: ' + itemPrice + ' تومان';
+        }
+
+        const reservationForm = document.getElementById('reservationForm');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmReservationBtn = document.getElementById('confirmReservation');
+        const cancelReservationBtn = document.getElementById('cancelReservation');
+
+        if (reservationForm) {
+            reservationForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // جلوگیری از ارسال پیش‌فرض فرم
+                
+                // نمایش مودال تأیید
+                confirmationModal.style.display = 'block';
+            });
+        }
+        
+        // دکمه تأیید در مودال
+        confirmReservationBtn.addEventListener('click', function() {
+            const reservationTime = document.getElementById('reservationTime').value;
+            const checkoutTime = document.getElementById('checkoutTime').value;
+            const personCount = document.getElementById('personCount').value;
+            const cafeItems = Array.from(document.querySelectorAll('input[name="cafeItems"]:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // محاسبه مدت زمان رزرو
+            const startTime = new Date(reservationTime);
+            const endTime = new Date(checkoutTime);
+            const durationHours = (endTime - startTime) / (1000 * 60 * 60);
+            
+            // محاسبه هزینه کل
+            const totalPrice = Math.round(durationHours * parseInt(itemPrice));
+            
+            // ساخت متن پیامک
+            let smsText = `رزرو جدید در کافی‌شاپ گیمینگ:
+آیتم: ${itemNameText}
+زمان شروع: ${reservationTime}
+زمان پایان: ${checkoutTime}
+مدت زمان: ${durationHours.toFixed(1)} ساعت
+تعداد افراد: ${personCount}`;
+
+            if (cafeItems.length > 0) {
+                smsText += `\nسفارشات کافه: ${cafeItems.join('، ')}`;
+            }
+            
+            smsText += `\nهزینه کل: ${totalPrice} تومان`;
+            
+            // در یک سیستم واقعی، اینجا کد ارسال پیامک قرار می‌گیرد
+            console.log('متن پیامک برای ارسال:');
+            console.log(smsText);
+            
+            // ذخیره اطلاعات رزرو در localStorage
+            const reservationData = {
+                userId: userMobile,
+                item: selectedItem,
+                itemName: itemNameText,
+                price: itemPrice,
+                reservationTime: reservationTime,
+                checkoutTime: checkoutTime,
+                personCount: personCount,
+                cafeItems: cafeItems,
+                totalPrice: totalPrice,
+                reservationDate: new Date().toISOString()
+            };
+            
+            // ذخیره رزرو در localStorage
+            const reservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+            reservations.push(reservationData);
+            localStorage.setItem('reservations', JSON.stringify(reservations));
+            
+            // نمایش پیام موفقیت
+            alert(`رزرو شما با موفقیت ثبت شد!\n\nیک پیامک حاوی جزئیات رزرو به شماره ${userMobile} ارسال شد.\n\nهزینه کل

@@ -1,0 +1,191 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('images/ps5_tv1.jpg'); /* تصویر پس‌زمینه */
+    background-size: contain; /* نمایش کامل تصویر بدون برش خوردگی */
+    background-repeat: no-repeat; /* عدم تکرار */
+    background-position: center center; /* قرارگیری در مرکز */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9); /* پس‌زمینه نیمه‌شفاف */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 900px; /* افزایش حداکثر عرض */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 500;
+}
+
+.item-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+}
+
+.item {
+    background-color: rgba(255, 255, 255, 0.8); /* پس‌زمینه نیمه‌شفاف برای آیتم‌ها */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+}
+
+.item img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.item h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.item p {
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.item button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.item button:hover {
+    background-color: #0056b3;
+}
+
+/* ... سایر استایل‌های قبلی ... */
+
+.reservation-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px; /* افزایش padding */
+    border-radius: 16px; /* گوشه‌های گردتر */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* سایه عمیق‌تر و ملایم‌تر */
+    width: 100%;
+    max-width: 600px; /* کمی افزایش حداکثر عرض */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.2em; /* کمی کوچکتر کردن عنوان */
+    font-weight: 500;
+}
+
+.form-group {
+    margin-bottom: 25px; /* افزایش فاصله بین گروه‌ها */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600; /* فونت ضخیم‌تر برای برچسب‌ها */
+    color: #555;
+    font-size: 1.1em;
+}
+
+.form-group input[type="datetime-local"],
+.form-group input[type="number"],
+.form-group select {
+    width: calc(100% - 22px);
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* گوشه‌های گردتر */
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease; /* انیمیشن تغییر رنگ حاشیه */
+}
+
+.form-group input[type="datetime-local"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* سایه ملایم‌تر هنگام فوکوس */
+}
+
+.form-group input[type="number"]::-webkit-inner-spin-button,
+.form-group input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-group input[type="number"] {
+    -moz-appearance: textfield; /* برای فایرفاکس */
+}
+
+.cafe-menu {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+
+.cafe-menu h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+.cafe-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.cafe-item label {
+    font-weight: 400;
+    color: #666;
+}
+
+.cafe-item input[type="checkbox"] {
+    margin-left: 15px;
+    width: 18px;
+    height: 18px;
+}
+
+button[type="submit"] {
+    background-color: #28a745; /* سبز جذاب */
+    color: white;
+    padding: 14px 24px; /* padding بیشتر */
+    border: none;
+    border-radius: 8px; /* گوشه‌های گردتر */
+    cursor: pointer;
+    font-size: 1.1em; /* کمی بزرگتر کردن فونت */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* انیمیشن‌های بیشتر */
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* سایه ملایم برای دکمه */
+}
+
+button[type="submit"]:hover {
+    background-color: #1e7e34;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* سایه بیشتر هنگام هاور */
+}

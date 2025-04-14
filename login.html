@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود</title>
+    <style>
+        form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        form div {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        
+        button {
+            background-color: #17a2b8;
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #138496;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .form-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm" action="#" method="post">
+        <h1>ورود به حساب کاربری</h1>
+        
+        <div>
+            <label for="mobile">شماره موبایل:</label>
+            <input type="tel" id="mobile" name="mobile" required>
+        </div>
+        
+        <div>
+            <label for="password">رمز عبور:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        
+        <button type="submit">ورود</button>
+        
+        <div class="form-footer">
+            <p>حساب کاربری ندارید؟ <a href="register.html">ثبت‌نام کنید</a></p>
+            <p><a href="index.html">بازگشت به صفحه اصلی</a></p>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const mobile = document.getElementById('mobile').value;
+            const password = document.getElementById('password').value;
+            
+            // در یک سیستم واقعی، این اطلاعات باید با سرور تأیید شوند
+            // برای نمونه، اینجا فقط بررسی می‌کنیم که آیا اطلاعات وارد شده‌اند
+            
+            if (mobile && password) {
+                // ذخیره اطلاعات کاربر در localStorage برای نشان دادن وضعیت ورود
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('userMobile', mobile);
+                
+                // هدایت به صفحه انتخاب آیتم
+                window.location.href = 'select_item.html';
+            } else {
+                alert('لطفاً تمام فیلدها را پر کنید.');
+            }
+        });
+    </script>
+</body>
+</html>
